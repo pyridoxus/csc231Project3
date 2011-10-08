@@ -1,0 +1,6 @@
+Debug/*
+Release/*
+*.tar
+*.zip
+.cproject
+.project
