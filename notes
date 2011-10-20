@@ -1,0 +1,104 @@
+Revolve
+
+ 
+
+Total points:                  10 points
+
+ 
+
+Concepts
+
+·         Modeling
+
+·         Polygonal meshes
+
+·         Projection
+
+·         Viewing
+
+·         GLUT sub-windows
+
+·         GLUT mouse interaction
+
+ 
+
+Overview
+Develop an interactive modeling program to generate a three-dimensional surface of revolution from a two-dimensional profile plot.
+
+ 
+
+ 
+
+Details
+
+Design two side by side views as in the example below. In the left window, construct a two-dimensional, orthographic projection to allow a user to plot a series of connected points oriented along the Y axis describing a profile plot of a surface. Build a three-dimensional surface using this input profile by a) making copies of the profile points in equal angular increments 360 degrees around the y axis (i.e. revolving), then b) connecting the points of all the profile copies together as a series of connected 4-sided polygons forming a polygonal mesh surface. Build each polygon by connecting points in counter-clockwise order. In the right window, construct a three-dimensional, perspective projection used to display the resultant polygonal mesh as the profile points are plotted in the left orthographic window. Create keyboard commands and a pop-up menu with the right window to perform the following tasks. Print the commands to the screen at the start of your program.
+
+·         increase the number of profile copies (or the resolution of the surface) (or ‘+’ key)
+
+·         decrease the number of profile copies (or the resolution of the surface) (or ‘-‘ key)
+
+·         display surface as points (or ‘p’ key)
+
+·         display surface as wireframe (or ‘w’ key)
+
+·         display surface as hidden-surface wireframe (or ‘h’ key)
+
+·         display surface as polygons using random colors per polygon (or ‘m’ key)
+
+·         exit the program (or ‘q’ key)
+
+ 
+
+ 
+
+Notes
+
+When using multiple GLUT sub-windows, it is necessary to specify which window is the currently active window to process events and drawing updates. This is  also called "setting the focus" in a window. The function glutSetWindow is used to set the focus on a window using the identifier returned from the glutCreateSubWindow  function (used to create each window) as in the example below.
+
+ 
+
+// Global window identifiers
+
+int ortho, persp;
+
+ 
+
+main()
+
+{
+
+    ortho = glutCreateSubWindow(....);
+
+ 
+
+    persp = glutCreateSubWindow(....);
+
+}
+
+ 
+
+// Event-handling callback
+
+void plotPoints(...)
+
+{
+
+   ...
+
+ 
+
+   // Execute draw commands in ortho window
+
+   glutSetWindow( ortho );
+
+   glutPostRedisplay();
+
+ 
+
+   // Execute draw commands in persp window
+
+   glutSetWindow( persp );
+
+   glutPostRedisplay();
+
+}
