@@ -70,7 +70,15 @@ void drawOrtho()
 // Orthographic mouse callback
 void plotPoints( int button, int state, int x, int y )
 {
-
+	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN))
+		profile.addPoint(x, y);
+	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_UP))
+	{
+		model.clear();
+		model.createModel(&profile);
+		model.draw();
+	}
+	return;
 }
 
 // Perspective surface draw
@@ -93,11 +101,25 @@ void menu( int value )
 // Perspective keyboard callback
 void keyboard( unsigned char key, int x, int y )
 {
-
+	switch(key)
+	{
+		case 'q':
+			exit(0);
+		break;
+		case '+':
+			model.incResolution();
+		break;
+		case '-':
+			model.decResolution();
+		break;
+	}
 }
 
 void consoleMenu(void)
 {
-	cout << GL_POINT << endl;
+	cout << "+ - Increase resolution" << endl;
+	cout << "- - Decrease resolution" << endl;
+	cout << "q - exit" << endl;
+	return;
 }
 

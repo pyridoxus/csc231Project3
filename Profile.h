@@ -3,6 +3,8 @@
 
 #include "point.h"
 #include <vector>
+#include <iostream>	// Only for debugging
+using namespace std;
 
 class Profile
 {
@@ -14,7 +16,7 @@ class Profile
 		int getSize(void);						// Return the size of the point array
 		Point *getPoint(int p);				// Return the point at p in array
 	private:
-		std::vector<Point> points;		// Array of points.
+		vector<Point> points;					// Array of points.
 };
 
 #endif

@@ -13,6 +13,7 @@ Model::Model(void)
 {
 	this->dType = GL_POINTS;
 	this->mesh = 0;
+	this->resolution = 3;
 	return;
 }
 
@@ -21,10 +22,23 @@ Model::~Model()
 	return;
 }
 
-int Model::createPoints(Point *points, int resolution)
-// Create all 3D points and return the number of points in the profile array
+void Model::createPoints(Profile *profile)
+// Create all 3D points
 {
-	return 0;
+	int i;	// Index to point in profile
+	double a;	// Angle around the y axis (radians)
+	Point *p;	// Temporary storage
+	for(i = 0; i < profile->getSize(); i++)
+	{
+		p = profile->getPoint(i);
+		cout << "Using point: (" << p->x << ", " << p->y << ")" << endl;
+		for(a = 0; a < 2 * PI; a += 2 * PI / this->resolution)
+		{
+			cout << a << endl;
+		}
+	}
+	cout << "Created points." << endl;
+	return;
 }
 
 void Model::createPolygons(void)
@@ -38,19 +52,45 @@ void Model::clear(void)
 {
 	if(mesh) free(mesh);
 	mesh = 0;
+	cout << "Cleared model." << endl;
 	return;
 }
 
-void Model::createModel(Profile *profile, int resolution)
+void Model::createModel(Profile *profile)
 // Create the model from the profile points. Resolution is number of points
 // around the y axis. Use clear() before using this function.
 {
-	int i;
-	Point *p;
 	if((resolution < 3) || (profile == 0) || (mesh != 0)) return;
-	for(i = 0; i < profile->getSize(); i++)
-	{
-		p = profile->getPoint(i);
-	}
+	this->createPoints(profile);
+	cout << "Created model." << endl;
 	return;
 }
+
+void Model::draw(void)
+// Draw the mesh into the OpenGL system
+{
+	cout << "Drawing..." << endl;
+	return;
+}
+
+void Model::drawType(int d)
+// Set the drawing type (wireframe, solid, etc)
+{
+	this->dType = d;
+	return;
+}
+
+void Model::incResolution(void)
+// Increase resolution by 1.
+{
+	this->resolution++;
+	return;
+}
+
+void Model::decResolution(void)
+// Decrease resolution by 1.
+{
+	this->resolution--;
+	return;
+}
+
