@@ -5,6 +5,9 @@ Surface of Revolution
 
 int main( int argc, char *argv[] )	// Return int in Linux
 {
+	// Show console menu
+	consoleMenu();
+
   // Initialize window system
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
@@ -88,5 +91,10 @@ void menu( int value )
 void keyboard( unsigned char key, int x, int y )
 {
 
+}
+
+void consoleMenu(void)
+{
+	cout << GL_POINT << endl;
 }
 

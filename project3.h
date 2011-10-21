@@ -22,5 +22,5 @@ void drawPersp();
 void plotPoints( int, int, int, int );
 void keyboard( unsigned char, int, int );
 void menu( int );
-
+void consoleMenu(void);
 #endif

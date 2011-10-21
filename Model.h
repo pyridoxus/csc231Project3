@@ -6,7 +6,7 @@
 class Model
 {
 	public:
-		Model();
+		Model(Point *points, int resolution);	// Create model using array of points
 		virtual ~Model();
 		void draw(void);						// Draw the mesh into the OpenGL system
 		int addPolygon(Polygon *p);	// Add the polygon to the mesh
