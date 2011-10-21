@@ -2,18 +2,22 @@
 #define MODEL_H_
 
 #include "Polygon.h"
+#include "Profile.h"
+#include <stdlib.h>
 
 class Model
 {
 	public:
-		Model(Point *points, int resolution);	// Create model using array of points
+		Model(void);	// Create model using array of points
 		virtual ~Model();
 		void draw(void);						// Draw the mesh into the OpenGL system
-		int addPolygon(Polygon *p);	// Add the polygon to the mesh
 		void drawType(int d);				// Set the drawing type (wireframe, solid, etc)
+		void clear(void);						// Delete the contents of the model
+		void createModel(Profile *profile, int resolution);	// Create model
 	private:
+		int createPoints(Point *points, int resolution);	// Create all 3D points
+		void createPolygons(void);	// Create all polygons in mesh
 		Polygon *mesh;		// Pointer to all polygons in the mesh
-		int index;				// Index to next polygon (used in addPolygon)
 		int dType;				// Drawing type (wireframe, solid, etc)
 };
 

@@ -3,6 +3,9 @@ Surface of Revolution
 ************************************************************************/
 #include "project3.h"
 
+Profile profile;
+Model model;
+
 int main( int argc, char *argv[] )	// Return int in Linux
 {
 	// Show console menu
