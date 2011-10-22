@@ -24,6 +24,8 @@ Polygon::~Polygon()
 
 int Polygon::addPoint(Point *p)		// Add a point to the polygon
 {
+	if(this->index < 4)	this->points[this->index++] = p;
+	else return -1;	// Polygon is completely defined already
 	return 0;
 }
 

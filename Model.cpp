@@ -51,9 +51,33 @@ void Model::createPoints(Profile *profile)
 	return;
 }
 
-void Model::createPolygons(void)
+void Model::createPolygons(int numProfile)
 // Create all polygons in mesh
 {
+	int i, j;
+	int p = 0;	// Index of polygon in mesh
+	int h, v;		// Index offsets
+	if(!this->mesh) this->mesh = (Polygon *)malloc((numProfile - 1) * \
+														(this->resolution - 1) * sizeof(Polygon));
+	else exit(1);
+	for(j = 0; j < numProfile - 1; j++)
+	{
+		for(i = 0; i < this->resolution; i++)
+		{
+			h = i + 1;
+			v = (j + 1) * this->resolution;
+			this->mesh[p].addPoint(this->points + i);
+			if(i == this->resolution - 1)
+				this->mesh[p].addPoint(this->points + i + 1);
+			else
+				this->mesh[p].addPoint(this->points + (j * this->resolution));
+			this->mesh[p].addPoint(this->points + v);
+			if(i == this->resolution - 1)
+				this->mesh[p].addPoint(this->points + h + v);
+			else
+				this->mesh[p].addPoint(this->points + h + v);
+		}
+	}
 	return;
 }
 
@@ -74,6 +98,7 @@ void Model::createModel(Profile *profile)
 {
 	if((resolution < 3) || (profile == 0) || (mesh != 0)) return;
 	this->createPoints(profile);
+	this->createPolygons(profile->getSize());
 	cout << "Created model." << endl;
 	return;
 }

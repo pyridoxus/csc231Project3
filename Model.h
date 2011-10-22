@@ -21,7 +21,7 @@ class Model
 		void decResolution(void);		// Decrease resolution by 1.
 	private:
 		void createPoints(Profile *profile);	// Create all 3D points
-		void createPolygons(void);	// Create all polygons in mesh
+		void createPolygons(int numProfile);	// Create all polygons in mesh
 		Point *points;		// Pointer to all points in the mesh
 		Polygon *mesh;		// Pointer to all polygons in the mesh
 		int dType;				// Drawing type (wireframe, solid, etc)
