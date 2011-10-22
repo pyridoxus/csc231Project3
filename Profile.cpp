@@ -7,12 +7,15 @@
 
 #include "Profile.h"
 
-Profile::Profile()
+Profile::Profile(int windowH)
 {
+	this->windowH = windowH;		// Height of window, used for drawing correctly
+	return;
 }
 
 Profile::~Profile()
 {
+	return;
 }
 
 void Profile::addPoint(int x, int y)
@@ -30,6 +33,22 @@ void Profile::addPoint(int x, int y)
 void Profile::draw(void)
 // Draw the profile
 {
+	Point p;	// Temporary storage
+  glColor3f(1.0, 1.0, 1.0 );
+  cout << "Profile Draw..." << endl;
+  glBegin( GL_LINE_STRIP );
+  cout << "Profile begin line" << endl;
+  cout << "Profile size: " << this->points.size() << endl;
+  for(unsigned int i = 0; i < this->points.size(); i++)
+  {
+  	p = this->points[i];
+  	// Subtract p.y from the height of window because mouse coordinates do not
+  	// go in the same direction as screen coordinates.
+		glVertex2f( p.x, this->windowH - p.y );
+		cout << "Profile Draw: (" << p.x << ", " << p.y << ")" << endl;
+  }
+  glEnd();
+  glFlush();
 	return;
 }
 

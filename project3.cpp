@@ -3,7 +3,7 @@ Surface of Revolution
 ************************************************************************/
 #include "project3.h"
 
-Profile profile;
+Profile profile(HEIGHT);
 Model model;
 
 int main( int argc, char *argv[] )	// Return int in Linux
@@ -22,6 +22,9 @@ int main( int argc, char *argv[] )	// Return int in Linux
   ortho = glutCreateSubWindow( main_w, GAP, GAP, WIDTH, HEIGHT );
 
 	// Construct two-dimensional orthographic projection here
+  glMatrixMode( GL_PROJECTION );
+  glLoadIdentity();
+  gluOrtho2D( 0.0, WIDTH, 0.0, HEIGHT );
 
 	// Orthographic draw
 	glutDisplayFunc( drawOrtho );
@@ -61,8 +64,8 @@ void drawOrtho()
 {
   glClearColor(0,0,0,1);
   glClear( GL_COLOR_BUFFER_BIT );
-
-	// Draw here
+  cout << "Start profile draw" << endl;
+	profile.draw();
 
 	glutSwapBuffers();
 }
@@ -74,9 +77,10 @@ void plotPoints( int button, int state, int x, int y )
 		profile.addPoint(x, y);
 	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_UP))
 	{
-		model.clear();
-		model.createModel(&profile);
-		model.draw();
+		drawOrtho();									// Draw the profile
+		model.clear();								// Clear current model
+		model.createModel(&profile);	// Create new one from profile
+		model.draw();									// Draw new model
 	}
 	return;
 }

@@ -12,6 +12,7 @@ Model::Model(void)
 // Create model
 {
 	this->dType = GL_POINTS;
+	this->points = 0;
 	this->mesh = 0;
 	this->resolution = 3;
 	return;
@@ -26,15 +27,24 @@ void Model::createPoints(Profile *profile)
 // Create all 3D points
 {
 	int i;	// Index to point in profile
+	int r = 0;	// Index to point in mesh
 	double a;	// Angle around the y axis (radians)
 	Point *p;	// Temporary storage
+	this->points = (Point *)malloc(profile->getSize() * this->resolution * \
+																 sizeof(Point));
 	for(i = 0; i < profile->getSize(); i++)
 	{
 		p = profile->getPoint(i);
 		cout << "Using point: (" << p->x << ", " << p->y << ")" << endl;
 		for(a = 0; a < 2 * PI; a += 2 * PI / this->resolution)
 		{
-			cout << a << endl;
+			this->points[r].x = p->x * cos(a);
+			this->points[r].y = p->y;
+			this->points[r].z = p->x * sin(a);
+			cout << "(" << this->points[r].x << ", " << \
+										 this->points[r].y << ", " << \
+										 this->points[r].z << ")" << endl;
+			r++;
 		}
 	}
 	cout << "Created points." << endl;
@@ -50,8 +60,10 @@ void Model::createPolygons(void)
 void Model::clear(void)
 // Delete the contents of the model
 {
-	if(mesh) free(mesh);
-	mesh = 0;
+	if(this->mesh) free(this->mesh);
+	this->mesh = 0;
+	if(this->points) free(this->points);
+	this->points = 0;
 	cout << "Cleared model." << endl;
 	return;
 }

@@ -5,9 +5,9 @@
 
 struct Point
 {
-		GLfloat x;
-		GLfloat y;
-		GLfloat z;
+		float x;
+		float y;
+		float z;
 };
 
 #endif

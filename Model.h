@@ -4,6 +4,7 @@
 #include "Polygon.h"
 #include "Profile.h"
 #include <stdlib.h>
+#include <math.h>
 
 #define PI 3.141592654
 
@@ -21,6 +22,7 @@ class Model
 	private:
 		void createPoints(Profile *profile);	// Create all 3D points
 		void createPolygons(void);	// Create all polygons in mesh
+		Point *points;		// Pointer to all points in the mesh
 		Polygon *mesh;		// Pointer to all polygons in the mesh
 		int dType;				// Drawing type (wireframe, solid, etc)
 		int resolution;		// Number of points around the y axis
