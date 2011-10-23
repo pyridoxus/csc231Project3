@@ -77,7 +77,7 @@ void drawOrtho()
 	glPushMatrix();		// Save view matrix
 //  glLoadIdentity();
 	glScalef( 1.0, -1.0, 1.0 );
-	glTranslatef( 0, -HEIGHT, 0.0 );
+	glTranslatef( WIDTH / 2.0, -HEIGHT, 0.0 );
 
 	profile.draw();
 
@@ -90,7 +90,7 @@ void plotPoints( int button, int state, int x, int y )
 {
 	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN))
 	{
-		profile.addPoint(x, y);
+		profile.addPoint(x - WIDTH / 2.0, y);
 		drawOrtho();									// Draw the profile
 	}
 	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_UP))
