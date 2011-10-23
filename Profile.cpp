@@ -34,15 +34,15 @@ void Profile::draw(void)
 {
 	Point p;	// Temporary storage
   glColor3f(1.0, 1.0, 1.0 );
-  cout << "Profile Draw..." << endl;
+//  cout << "Profile Draw..." << endl;
   glBegin( GL_LINE_STRIP );
-  cout << "Profile begin line" << endl;
-  cout << "Profile size: " << this->points.size() << endl;
+//  cout << "Profile begin line" << endl;
+//  cout << "Profile size: " << this->points.size() << endl;
   for(unsigned int i = 0; i < this->points.size(); i++)
   {
   	p = this->points[i];
 		glVertex2f( p.x, p.y );
-		cout << "Profile Draw: (" << p.x << ", " << p.y << ")" << endl;
+//		cout << "Profile Draw: (" << p.x << ", " << p.y << ")" << endl;
   }
   glEnd();
   glFlush();

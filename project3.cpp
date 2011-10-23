@@ -38,7 +38,8 @@ int main( int argc, char *argv[] )	// Return int in Linux
 	// Construct three-dimensional perspective projection here
   glMatrixMode( GL_PROJECTION );
   glLoadIdentity();
-  gluPerspective( 0.0, WIDTH, 0.0, HEIGHT );
+//  gluOrtho2D( 0.0, WIDTH, 0.0, HEIGHT );
+  gluPerspective(120.0, 1.0, 10.0, 1000.0);
 
 	// Perspective draw
   glEnable( GL_DEPTH_TEST );
@@ -65,9 +66,11 @@ void drawMain()
 // Orthographic profile draw
 void drawOrtho()
 {
+  glutSetWindow( ortho );
+  glutPostRedisplay();
   glClearColor(0,0,0,1);
   glClear( GL_COLOR_BUFFER_BIT );
-  cout << "Start profile draw" << endl;
+//  cout << "Start profile draw" << endl;
 	profile.draw();
 
 	glutSwapBuffers();
@@ -83,9 +86,7 @@ void plotPoints( int button, int state, int x, int y )
 	}
 	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_UP))
 	{
-		model.clear();								// Clear current model
-		model.createModel(&profile);	// Create new one from profile
-		drawPersp();									// Draw new model
+		drawModel();
 	}
 	return;
 }
@@ -93,10 +94,12 @@ void plotPoints( int button, int state, int x, int y )
 // Perspective surface draw
 void drawPersp()
 {
+  glutSetWindow( persp );
+  glutPostRedisplay();
   glClearColor( 0, 0, 0, 1.0 );
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-  cout << "Start model draw" << endl;
+//  cout << "Start model draw" << endl;
 	model.draw();
 
 	glutSwapBuffers();
@@ -118,9 +121,11 @@ void keyboard( unsigned char key, int x, int y )
 		break;
 		case '+':
 			model.incResolution();
+			drawModel();
 		break;
 		case '-':
 			model.decResolution();
+			drawModel();
 		break;
 	}
 }
@@ -133,3 +138,10 @@ void consoleMenu(void)
 	return;
 }
 
+void drawModel(void)
+{
+	model.clear();								// Clear current model
+	model.createModel(&profile);	// Create new one from profile
+//	drawPersp();									// Draw new model
+	return;
+}

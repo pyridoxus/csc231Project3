@@ -145,10 +145,10 @@ void Model::createModel(Profile *profile)
 void Model::draw(void)
 // Draw the mesh into the OpenGL system
 {
-	cout << "Drawing..." << endl;
+//	cout << "Drawing..." << endl;
 	for(int i = 0; i < this->numPolygons; i++)
 	{
-		cout << "Drawing polygon " << i << endl;
+//		cout << "Drawing polygon " << i << endl;
 		this->mesh[i]->draw();
 	}
   glFlush();
