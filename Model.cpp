@@ -57,6 +57,7 @@ void Model::createPolygons(int numProfile)
 	int i = 0;	// Index to point in 3D points
 	int p;			// Index of polygon in mesh
 	Polygon *poly;	// Temporary storage
+	Point c;
 
 	for(p = 0; p < this->resolution * (numProfile - 1); p++)
 	{
@@ -80,6 +81,22 @@ void Model::createPolygons(int numProfile)
 		i -= this->resolution;
 		poly->addPoint(this->points[i]);
 		cout << ", " << i << ")" << endl;
+
+		if(this->dType == RANDOMCOLORPOLY)
+		{
+			c.x = (rand() % 256) / 256.0;
+			c.y = (rand() % 256) / 256.0;
+			c.z = (rand() % 256) / 256.0;
+			poly->setColor(&c);
+		}
+		else
+		{
+			c.x = 1.0;
+			c.y = 1.0;
+			c.z = 1.0;
+			poly->setColor(&c);
+		}
+		cout << "Random color: (" << c.x << ", " << c.y << ", " << c.z << ")" << endl;
 		this->mesh.push_back(*poly);	// Vector will handle deleting objects
 	}
 	return;
@@ -112,8 +129,8 @@ void Model::createModel(Profile *profile)
 void Model::draw(void)
 // Draw the mesh into the OpenGL system
 {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	for(unsigned int i = 0; i < this->mesh.size(); i++) this->mesh[i].draw();
+	for(unsigned int i = 0; i < this->mesh.size(); i++)
+		this->mesh[i].draw(this->dType);
   glFlush();
 	return;
 }

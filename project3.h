@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "Model.h"
+#include "drawModes.h"
 
 // window constants
 #define GAP				10.0

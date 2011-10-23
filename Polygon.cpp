@@ -31,20 +31,32 @@ int Polygon::addPoint(Point p)		// Add a point to the polygon
 	return 0;
 }
 
-void Polygon::draw(void)					// Draw the polygon into the OpenGL system
+void Polygon::draw(int mode)			// Draw the polygon into the OpenGL system
 {
-  glBegin( GL_POLYGON );
+  glColor3f(this->color.x, this->color.y, this->color.z);
+	switch(mode)
+	{
+		case POINTS:
+			glBegin( GL_POINTS );
+		break;
+		case WIREFRAME:
+			glBegin( GL_POLYGON );
+		break;
+		case HIDDENSURFACEWIRE:
+			glBegin( GL_POLYGON );
+		break;
+		case RANDOMCOLORPOLY:
+			glBegin( GL_POLYGON );
+		break;
+	}
   for(int i = 0; i < 4; i++)
-  {
-  	glVertex3f( this->points[i].x,
-  			this->points[i].y,
-  			this->points[i].z);
-  }
+  	glVertex3f( this->points[i].x, this->points[i].y, this->points[i].z);
   glEnd();
 	return;
 }
 
 void Polygon::setColor(Point *c)	// Use the point structure to hold RGB color
 {
+	this->color = *c;
 	return;
 }

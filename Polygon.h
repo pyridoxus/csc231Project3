@@ -2,6 +2,7 @@
 #define POLYGON_H_
 
 #include "point.h"
+#include "drawModes.h"
 
 class Polygon
 {
@@ -9,7 +10,7 @@ class Polygon
 		Polygon();
 		virtual ~Polygon();
 		int addPoint(Point p);		// Add a point to the polygon
-		void draw(void);					// Draw the polygon into the OpenGL system
+		void draw(int mode);					// Draw the polygon into the OpenGL system
 		void setColor(Point *c);	// Use the point structure to hold RGB color
 	private:
 		Point points[4];

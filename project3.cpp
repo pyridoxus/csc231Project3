@@ -140,6 +140,22 @@ void keyboard( unsigned char key, int x, int y )
 			model.decResolution();
 			drawModel();
 		break;
+		case 'p':
+			model.drawType(POINTS);
+		break;
+		case 'w':
+			model.drawType(WIREFRAME);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		break;
+		case 'h':
+			model.drawType(HIDDENSURFACEWIRE);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		break;
+		case 'm':
+			model.drawType(RANDOMCOLORPOLY);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			drawModel();
+		break;
 	}
 }
 
@@ -147,6 +163,10 @@ void consoleMenu(void)
 {
 	cout << "+ - Increase resolution" << endl;
 	cout << "- - Decrease resolution" << endl;
+	cout << "p - Draw as points" << endl;
+	cout << "w - Draw as wireframe" << endl;
+	cout << "h - Draw as hidden surface wireframe" << endl;
+	cout << "m - Draw as random color polygon" << endl;
 	cout << "q - exit" << endl;
 	return;
 }
