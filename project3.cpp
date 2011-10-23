@@ -51,6 +51,13 @@ int main( int argc, char *argv[] )	// Return int in Linux
 	// Perspective keyboard and menu callbacks
 	glutKeyboardFunc( keyboard );
   glutCreateMenu( menu );
+	glutAddMenuEntry( "Increase resolution ('+' key)", 1 );
+	glutAddMenuEntry( "Decrease resolution ('-' key)", 2 );
+	glutAddMenuEntry( "Draw as points ('p' key)", 3 );
+	glutAddMenuEntry( "Draw as wireframe ('w' key)", 4 );
+	glutAddMenuEntry( "Draw as hidden surface wireframe ('h' key)", 5 );
+	glutAddMenuEntry( "Draw as random color polygon ('m' key)", 6 );
+	glutAddMenuEntry( "Exit ('q' key)", 7 );
   glutAttachMenu( GLUT_RIGHT_BUTTON );
 
   // Main loop
@@ -121,7 +128,37 @@ void drawPersp()
 // Perspective menu callback
 void menu( int value )
 {
-
+	switch(value)
+	{
+		case 1:
+			model.incResolution();
+			drawModel();
+		break;
+		case 2:
+			model.decResolution();
+			drawModel();
+		break;
+		case 3:
+			model.drawType(POINTS);
+		break;
+		case 4:
+			model.drawType(WIREFRAME);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		break;
+		case 5:
+			model.drawType(HIDDENSURFACEWIRE);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		break;
+		case 6:
+			model.drawType(RANDOMCOLORPOLY);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			drawModel();
+		break;
+		case 7:
+			exit(0);
+		break;
+	}
+	return;
 }
 
 // Perspective keyboard callback
