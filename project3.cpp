@@ -42,7 +42,7 @@ int main( int argc, char *argv[] )	// Return int in Linux
   glMatrixMode( GL_PROJECTION );
   glLoadIdentity();
 //  gluOrtho2D( 0.0, WIDTH, 0.0, HEIGHT );
-  gluPerspective(20.0, WIDTH / HEIGHT, 1.0, (CAMERA + 2) * WIDTH);
+  gluPerspective(15.0, WIDTH / HEIGHT, 1.0, (CAMERA + 2) * WIDTH);
 
 	// Perspective draw
   glEnable( GL_DEPTH_TEST );
@@ -112,7 +112,6 @@ void drawPersp()
 	glPushMatrix();		// Save view matrix
 	glScalef( 1.0, -1.0, 1.0 );
 	glTranslatef( 0, -HEIGHT / 2.0, 0.0 );
-
 	model.draw();
 
 	glPopMatrix();		// Restore view matrix

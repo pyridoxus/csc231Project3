@@ -26,11 +26,7 @@ Polygon::~Polygon()
 
 int Polygon::addPoint(Point p)		// Add a point to the polygon
 {
-	if(this->index < 4)
-	{
-		this->points[this->index++] = p;
-//		cout << "Polygon adding point " << this->index << " as " << p << endl;
-	}
+	if(this->index < 4) this->points[this->index++] = p;
 	else return -1;	// Polygon is completely defined already
 	return 0;
 }
@@ -38,18 +34,11 @@ int Polygon::addPoint(Point p)		// Add a point to the polygon
 void Polygon::draw(void)					// Draw the polygon into the OpenGL system
 {
   glBegin( GL_POLYGON );
-//  for(int i = 0; i < 4; i++)
-//  {
-//		cout << "Drawing: Point " << i << " at " << this->points[i] << endl;
-//  }
   for(int i = 0; i < 4; i++)
   {
   	glVertex3f( this->points[i].x,
   			this->points[i].y,
   			this->points[i].z);
-//		cout << "Drawing: Point " << i << " (" << this->points[i]->x << ", ";
-//		cout << this->points[i]->y << ", ";
-//		cout <<	this->points[i]->z << ")" << endl;
   }
   glEnd();
 	return;

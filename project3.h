@@ -10,7 +10,7 @@ using namespace std;
 #define GAP				10.0
 #define WIDTH			520.0
 #define HEIGHT		390.0
-#define CAMERA		6.0			// Camera z position = CAMERA * WIDTH
+#define CAMERA		3.0			// Camera z position = CAMERA * WIDTH
 
 // GLUT window ids
 int main_w, ortho, persp;
