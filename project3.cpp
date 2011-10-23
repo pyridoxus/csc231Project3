@@ -74,10 +74,12 @@ void drawOrtho()
 void plotPoints( int button, int state, int x, int y )
 {
 	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN))
+	{
 		profile.addPoint(x, y);
+		drawOrtho();									// Draw the profile
+	}
 	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_UP))
 	{
-		drawOrtho();									// Draw the profile
 		model.clear();								// Clear current model
 		model.createModel(&profile);	// Create new one from profile
 		model.draw();									// Draw new model

@@ -54,29 +54,35 @@ void Model::createPoints(Profile *profile)
 void Model::createPolygons(int numProfile)
 // Create all polygons in mesh
 {
-	int i, j;
-	int p = 0;	// Index of polygon in mesh
-	int h, v;		// Index offsets
+	int i = 0;	// Index to point in 3D points
+	int p;			// Index of polygon in mesh
 	if(!this->mesh) this->mesh = (Polygon *)malloc((numProfile - 1) * \
 														(this->resolution - 1) * sizeof(Polygon));
-	else exit(1);
-	for(j = 0; j < numProfile - 1; j++)
+	else exit(1);	// Mesh should have been freed and reset first.
+	cout << "Creating polygons..." << endl;
+	cout << "Resolution = " << this->resolution << endl;
+	cout << "Points in profile = " << numProfile << endl;
+
+	for(p = 0; p < this->resolution * (numProfile - 1); p++)
 	{
-		for(i = 0; i < this->resolution; i++)
-		{
-			h = i + 1;
-			v = (j + 1) * this->resolution;
-			this->mesh[p].addPoint(this->points + i);
-			if(i == this->resolution - 1)
-				this->mesh[p].addPoint(this->points + i + 1);
-			else
-				this->mesh[p].addPoint(this->points + (j * this->resolution));
-			this->mesh[p].addPoint(this->points + v);
-			if(i == this->resolution - 1)
-				this->mesh[p].addPoint(this->points + h + v);
-			else
-				this->mesh[p].addPoint(this->points + h + v);
-		}
+		i = p;	// Start the points in polygon with the current polygon index.
+		cout << "Polygon " << p << ": (" << i;
+		this->mesh[p].addPoint(this->points + i);
+
+		i += this->resolution;	// Point to the point on next row of profile.
+		this->mesh[p].addPoint(this->points + i);
+		cout << ", " << i;
+		// Now index the next point on next row. Check if the point is as the
+		// beginning of the row.
+		i ++; // Index to point
+		if((i % this->resolution) == 0) i -= this->resolution;	// Wrap around
+		this->mesh[p].addPoint(this->points + i);
+		cout << ", " << i;
+
+		// Now index the last point which is on current row.
+		i -= this->resolution;
+		this->mesh[p].addPoint(this->points + i);
+		cout << ", " << i << ")" << endl;
 	}
 	return;
 }
