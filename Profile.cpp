@@ -25,7 +25,7 @@ void Profile::addPoint(int x, int y)
 	p.y = y;
 	p.z = 0.0;
 	this->points.push_back(p);
-	cout << "Added point at " << x << y << endl;
+//	cout << "Added point at " << x << y << endl;
 	return;
 }
 

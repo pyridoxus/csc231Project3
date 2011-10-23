@@ -14,7 +14,7 @@ Model::Model(void)
 	this->dType = GL_POINTS;
 	this->points = 0;
 	this->mesh = 0;
-	this->resolution = 3;
+	this->resolution = 9;
 	this->numPolygons = 0;
 	return;
 }
@@ -33,8 +33,17 @@ void Model::createPoints(Profile *profile)
 	double a;	// Angle around the y axis (radians)
 	Point *p;	// Temporary storage
 	if(!this->points)
+	{
 		this->points = (Point *)malloc(profile->getSize() * this->resolution * \
 																 sizeof(Point));
+		cout << "Allocating points:" << endl;
+		cout << "Resolution:       " << this->resolution << endl;
+		cout << "Profile Size:     " << profile->getSize() << endl;
+		cout << "Point Size:       " << sizeof(Point) << endl;
+		cout << "Memory allocated: " << this->resolution * profile->getSize() * \
+				sizeof(Point) << endl;
+		cout << "points=" << this->points << endl;
+	}
 	else
 	{
 		cout << "Cannot create points" << endl;
@@ -43,19 +52,19 @@ void Model::createPoints(Profile *profile)
 	for(i = 0; i < profile->getSize(); i++)
 	{
 		p = profile->getPoint(i);
-		cout << "Using point: (" << p->x << ", " << p->y << ")" << endl;
+//		cout << "Using point: (" << p->x << ", " << p->y << ")" << endl;
 		for(a = 0; a < 2 * PI; a += 2 * PI / this->resolution)
 		{
 			this->points[r].x = p->x * cos(a);
 			this->points[r].y = p->y;
 			this->points[r].z = p->x * sin(a);
-			cout << "(" << this->points[r].x << ", " << \
-										 this->points[r].y << ", " << \
-										 this->points[r].z << ")" << endl;
+//			cout << "(" << this->points[r].x << ", " << \
+//										 this->points[r].y << ", " << \
+//										 this->points[r].z << ")" << endl;
 			r++;
 		}
 	}
-	cout << "Created points." << endl;
+//	cout << "Created points." << endl;
 	return;
 }
 
@@ -65,47 +74,57 @@ void Model::createPolygons(int numProfile)
 	int i = 0;	// Index to point in 3D points
 	int p;			// Index of polygon in mesh
 	this->numPolygons = 0;
-	if(!this->mesh) this->mesh = (Polygon **)malloc(numProfile * \
+	if(!this->mesh)
+	{
+		cout << "Allocating polygons: " << endl;
+		cout << "Resolution:          " << this->resolution << endl;
+		cout << "Profile Size:        " << numProfile << endl;
+		cout << "Polygon pointer Size:" << sizeof(Polygon *) << endl;
+		cout << "Memory allocated:    " << this->resolution * numProfile * \
+				sizeof(Polygon *) << endl;
+		this->mesh = (Polygon **)malloc(numProfile * \
 														this->resolution * sizeof(Polygon *));
+		cout << "mesh=" << this->mesh << endl;
+	}
 	else
 	{
 		cout << "Cannot create polygons" << endl;
 		exit(2);	// Mesh should have been freed and reset first.
 	}
-	cout << "Creating polygons..." << endl;
-	cout << "Resolution = " << this->resolution << endl;
-	cout << "Points in profile = " << numProfile << endl;
+//	cout << "Creating polygons..." << endl;
+//	cout << "Resolution = " << this->resolution << endl;
+//	cout << "Points in profile = " << numProfile << endl;
 
 	for(p = 0; p < this->resolution * (numProfile - 1); p++)
 	{
 		i = p;	// Start the points in polygon with the current polygon index.
 		this->mesh[p] = new Polygon;
-		cout << "Polygon " << p << ": (" << this->points + i << ": ";
-		this->printPoint(this->points + i);
-//		cout << "Polygon " << p << ": (" << i;
+//		cout << "Polygon " << p << ": (" << this->points + i << ": ";
+//		this->printPoint(this->points + i);
+		cout << "Polygon " << p << ": (" << i;
 		this->mesh[p]->addPoint(this->points + i);
 
 		i += this->resolution;	// Point to the point on next row of profile.
 		this->mesh[p]->addPoint(this->points + i);
-		cout << ", " << this->points + i << ": ";
-		this->printPoint(this->points + i);
-//		cout << ", " << i;
+//		cout << ", " << this->points + i << ": ";
+//		this->printPoint(this->points + i);
+		cout << ", " << i;
 		// Now index the next point on next row. Check if the point is as the
 		// beginning of the row.
 		i ++; // Index to point
 		if((i % this->resolution) == 0) i -= this->resolution;	// Wrap around
 		this->mesh[p]->addPoint(this->points + i);
-		cout << ", " << this->points + i << ": ";
-		this->printPoint(this->points + i);
-//		cout << ", " << i;
+//		cout << ", " << this->points + i << ": ";
+//		this->printPoint(this->points + i);
+		cout << ", " << i;
 
 		// Now index the last point which is on current row.
 		i -= this->resolution;
 		this->mesh[p]->addPoint(this->points + i);
-		cout << ", " << this->points + i << ": ";
-		this->printPoint(this->points + i);
-		cout << ")" << endl;
-//		cout << ", " << i << ")" << endl;
+//		cout << ", " << this->points + i << ": ";
+//		this->printPoint(this->points + i);
+//		cout << ")" << endl;
+		cout << ", " << i << ")" << endl;
 		this->numPolygons++;
 	}
 	return;
@@ -114,6 +133,9 @@ void Model::createPolygons(int numProfile)
 void Model::clear(void)
 // Delete the contents of the model
 {
+	cout << "Clearing model...." << endl;
+	cout << "mesh=" << this->mesh << endl;
+	cout << "points=" << this->points << endl;
 	if(this->mesh)
 	{
 		for(int i = 0; i < this->numPolygons; i++)
@@ -138,7 +160,7 @@ void Model::createModel(Profile *profile)
 	}
 	this->createPoints(profile);
 	this->createPolygons(profile->getSize());
-	cout << "Created model." << endl;
+//	cout << "Created model." << endl;
 	return;
 }
 
