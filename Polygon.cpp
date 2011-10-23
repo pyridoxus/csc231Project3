@@ -6,6 +6,8 @@
  */
 
 #include "Polygon.h"
+#include <iostream>	// Only for debugging
+using namespace std;
 
 Polygon::Polygon()
 {
@@ -24,7 +26,11 @@ Polygon::~Polygon()
 
 int Polygon::addPoint(Point *p)		// Add a point to the polygon
 {
-	if(this->index < 4)	this->points[this->index++] = p;
+	if(this->index < 4)
+	{
+		this->points[this->index++] = p;
+		cout << "Polygon adding point " << this->index << " as " << p << endl;
+	}
 	else return -1;	// Polygon is completely defined already
 	return 0;
 }

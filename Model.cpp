@@ -30,8 +30,14 @@ void Model::createPoints(Profile *profile)
 	int r = 0;	// Index to point in mesh
 	double a;	// Angle around the y axis (radians)
 	Point *p;	// Temporary storage
-	this->points = (Point *)malloc(profile->getSize() * this->resolution * \
+	if(!this->points)
+		this->points = (Point *)malloc(profile->getSize() * this->resolution * \
 																 sizeof(Point));
+	else
+	{
+		cout << "Cannot create points" << endl;
+		exit(1);
+	}
 	for(i = 0; i < profile->getSize(); i++)
 	{
 		p = profile->getPoint(i);
@@ -56,9 +62,13 @@ void Model::createPolygons(int numProfile)
 {
 	int i = 0;	// Index to point in 3D points
 	int p;			// Index of polygon in mesh
-	if(!this->mesh) this->mesh = (Polygon *)malloc((numProfile - 1) * \
-														(this->resolution - 1) * sizeof(Polygon));
-	else exit(1);	// Mesh should have been freed and reset first.
+	if(!this->mesh) this->mesh = (Polygon *)malloc(numProfile * \
+														this->resolution * sizeof(Polygon));
+	else
+	{
+		cout << "Cannot create polygons" << endl;
+		exit(2);	// Mesh should have been freed and reset first.
+	}
 	cout << "Creating polygons..." << endl;
 	cout << "Resolution = " << this->resolution << endl;
 	cout << "Points in profile = " << numProfile << endl;
@@ -102,7 +112,11 @@ void Model::createModel(Profile *profile)
 // Create the model from the profile points. Resolution is number of points
 // around the y axis. Use clear() before using this function.
 {
-	if((resolution < 3) || (profile == 0) || (mesh != 0)) return;
+	if((resolution < 3) || (profile == 0) || (mesh != 0))
+	{
+		cout << "Cannot create model" << endl;
+		return;
+	}
 	this->createPoints(profile);
 	this->createPolygons(profile->getSize());
 	cout << "Created model." << endl;
