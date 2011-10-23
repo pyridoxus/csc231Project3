@@ -146,6 +146,7 @@ void Model::draw(void)
 // Draw the mesh into the OpenGL system
 {
 //	cout << "Drawing..." << endl;
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	for(int i = 0; i < this->numPolygons; i++)
 	{
 //		cout << "Drawing polygon " << i << endl;

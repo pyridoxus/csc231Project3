@@ -36,10 +36,13 @@ int main( int argc, char *argv[] )	// Return int in Linux
   persp = glutCreateSubWindow( main_w, GAP+WIDTH+GAP, GAP, WIDTH, HEIGHT );
 
 	// Construct three-dimensional perspective projection here
+  glMatrixMode( GL_MODELVIEW );
+  glLoadIdentity();
+  glTranslatef( 0, 0, -CAMERA * WIDTH );
   glMatrixMode( GL_PROJECTION );
   glLoadIdentity();
 //  gluOrtho2D( 0.0, WIDTH, 0.0, HEIGHT );
-  gluPerspective(120.0, 1.0, 10.0, 1000.0);
+  gluPerspective(20.0, WIDTH / HEIGHT, 1.0, (CAMERA + 2) * WIDTH);
 
 	// Perspective draw
   glEnable( GL_DEPTH_TEST );
@@ -71,8 +74,14 @@ void drawOrtho()
   glClearColor(0,0,0,1);
   glClear( GL_COLOR_BUFFER_BIT );
 //  cout << "Start profile draw" << endl;
+	glPushMatrix();		// Save view matrix
+//  glLoadIdentity();
+	glScalef( 1.0, -1.0, 1.0 );
+	glTranslatef( 0, -HEIGHT, 0.0 );
+
 	profile.draw();
 
+	glPopMatrix();		// Restore view matrix
 	glutSwapBuffers();
 }
 
@@ -81,7 +90,7 @@ void plotPoints( int button, int state, int x, int y )
 {
 	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN))
 	{
-		profile.addPoint(x, HEIGHT - y);
+		profile.addPoint(x, y);
 		drawOrtho();									// Draw the profile
 	}
 	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_UP))
@@ -98,10 +107,15 @@ void drawPersp()
   glutPostRedisplay();
   glClearColor( 0, 0, 0, 1.0 );
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
 //  cout << "Start model draw" << endl;
+
+	glPushMatrix();		// Save view matrix
+	glScalef( 1.0, -1.0, 1.0 );
+	glTranslatef( 0, -HEIGHT / 2.0, 0.0 );
+
 	model.draw();
 
+	glPopMatrix();		// Restore view matrix
 	glutSwapBuffers();
 }
 
