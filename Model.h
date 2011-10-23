@@ -23,11 +23,10 @@ class Model
 		void createPoints(Profile *profile);	// Create all 3D points
 		void createPolygons(int numProfile);	// Create all polygons in mesh
 		void printPoint(Point *);							// Print point for debug
-		Point *points;		// Pointer to all points in the mesh
-		Polygon **mesh;		// Pointer to all polygons in the mesh
+		vector<Point> points;		// All points in the mesh
+		vector<Polygon> mesh;		// Pointers to all polygons in the mesh
 		int dType;				// Drawing type (wireframe, solid, etc)
 		int resolution;		// Number of points around the y axis
-		int numPolygons;	// Number of polygons
 };
 
 #endif

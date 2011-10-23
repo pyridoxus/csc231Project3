@@ -15,16 +15,16 @@ Polygon::Polygon()
 	this->color.x = 1.0;
 	this->color.y = 1.0;
 	this->color.z = 1.0;
-	for(int i = 0; i < 4; i++) this->points[i] = 0;
 	return;
 }
 
 Polygon::~Polygon()
 {
+	//	cout <<"Polygon Destructor called." << endl; // Debug
 	return;
 }
 
-int Polygon::addPoint(Point *p)		// Add a point to the polygon
+int Polygon::addPoint(Point p)		// Add a point to the polygon
 {
 	if(this->index < 4)
 	{
@@ -44,9 +44,9 @@ void Polygon::draw(void)					// Draw the polygon into the OpenGL system
 //  }
   for(int i = 0; i < 4; i++)
   {
-  	glVertex3f( this->points[i]->x,
-  			this->points[i]->y,
-  			this->points[i]->z);
+  	glVertex3f( this->points[i].x,
+  			this->points[i].y,
+  			this->points[i].z);
 //		cout << "Drawing: Point " << i << " (" << this->points[i]->x << ", ";
 //		cout << this->points[i]->y << ", ";
 //		cout <<	this->points[i]->z << ")" << endl;
