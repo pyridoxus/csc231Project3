@@ -15,6 +15,7 @@ Model::Model(void)
 	this->points = 0;
 	this->mesh = 0;
 	this->resolution = 3;
+	this->numPolygons = 0;
 	return;
 }
 
@@ -62,8 +63,9 @@ void Model::createPolygons(int numProfile)
 {
 	int i = 0;	// Index to point in 3D points
 	int p;			// Index of polygon in mesh
-	if(!this->mesh) this->mesh = (Polygon *)malloc(numProfile * \
-														this->resolution * sizeof(Polygon));
+	this->numPolygons = 0;
+	if(!this->mesh) this->mesh = (Polygon **)malloc(numProfile * \
+														this->resolution * sizeof(Polygon *));
 	else
 	{
 		cout << "Cannot create polygons" << endl;
@@ -76,23 +78,34 @@ void Model::createPolygons(int numProfile)
 	for(p = 0; p < this->resolution * (numProfile - 1); p++)
 	{
 		i = p;	// Start the points in polygon with the current polygon index.
-		cout << "Polygon " << p << ": (" << i;
-		this->mesh[p].addPoint(this->points + i);
+		this->mesh[p] = new Polygon;
+		cout << "Polygon " << p << ": (" << this->points + i << ": ";
+		this->printPoint(this->points + i);
+//		cout << "Polygon " << p << ": (" << i;
+		this->mesh[p]->addPoint(this->points + i);
 
 		i += this->resolution;	// Point to the point on next row of profile.
-		this->mesh[p].addPoint(this->points + i);
-		cout << ", " << i;
+		this->mesh[p]->addPoint(this->points + i);
+		cout << ", " << this->points + i << ": ";
+		this->printPoint(this->points + i);
+//		cout << ", " << i;
 		// Now index the next point on next row. Check if the point is as the
 		// beginning of the row.
 		i ++; // Index to point
 		if((i % this->resolution) == 0) i -= this->resolution;	// Wrap around
-		this->mesh[p].addPoint(this->points + i);
-		cout << ", " << i;
+		this->mesh[p]->addPoint(this->points + i);
+		cout << ", " << this->points + i << ": ";
+		this->printPoint(this->points + i);
+//		cout << ", " << i;
 
 		// Now index the last point which is on current row.
 		i -= this->resolution;
-		this->mesh[p].addPoint(this->points + i);
-		cout << ", " << i << ")" << endl;
+		this->mesh[p]->addPoint(this->points + i);
+		cout << ", " << this->points + i << ": ";
+		this->printPoint(this->points + i);
+		cout << ")" << endl;
+//		cout << ", " << i << ")" << endl;
+		this->numPolygons++;
 	}
 	return;
 }
@@ -100,7 +113,12 @@ void Model::createPolygons(int numProfile)
 void Model::clear(void)
 // Delete the contents of the model
 {
-	if(this->mesh) free(this->mesh);
+	if(this->mesh)
+	{
+		for(int i = 0; i < this->numPolygons; i++)
+			delete this->mesh[i];
+		free(this->mesh);
+	}
 	this->mesh = 0;
 	if(this->points) free(this->points);
 	this->points = 0;
@@ -127,6 +145,12 @@ void Model::draw(void)
 // Draw the mesh into the OpenGL system
 {
 	cout << "Drawing..." << endl;
+	for(int i = 0; i < this->numPolygons; i++)
+	{
+		cout << "Drawing polygon " << i << endl;
+		this->mesh[i]->draw();
+	}
+  glFlush();
 	return;
 }
 
@@ -151,3 +175,10 @@ void Model::decResolution(void)
 	return;
 }
 
+void Model::printPoint(Point *p)
+{
+	cout << "(" << p->x << ", ";
+	cout << p->y << ", ";
+	cout << p->z << ")";
+	return;
+}

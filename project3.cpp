@@ -36,6 +36,9 @@ int main( int argc, char *argv[] )	// Return int in Linux
   persp = glutCreateSubWindow( main_w, GAP+WIDTH+GAP, GAP, WIDTH, HEIGHT );
 
 	// Construct three-dimensional perspective projection here
+  glMatrixMode( GL_PROJECTION );
+  glLoadIdentity();
+  gluPerspective( 0.0, WIDTH, 0.0, HEIGHT );
 
 	// Perspective draw
   glEnable( GL_DEPTH_TEST );
@@ -82,7 +85,7 @@ void plotPoints( int button, int state, int x, int y )
 	{
 		model.clear();								// Clear current model
 		model.createModel(&profile);	// Create new one from profile
-		model.draw();									// Draw new model
+		drawPersp();									// Draw new model
 	}
 	return;
 }
@@ -93,7 +96,8 @@ void drawPersp()
   glClearColor( 0, 0, 0, 1.0 );
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	// Draw here
+  cout << "Start model draw" << endl;
+	model.draw();
 
 	glutSwapBuffers();
 }
