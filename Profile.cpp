@@ -7,9 +7,8 @@
 
 #include "Profile.h"
 
-Profile::Profile(int windowH)
+Profile::Profile(void)
 {
-	this->windowH = windowH;		// Height of window, used for drawing correctly
 	return;
 }
 
@@ -42,9 +41,7 @@ void Profile::draw(void)
   for(unsigned int i = 0; i < this->points.size(); i++)
   {
   	p = this->points[i];
-  	// Subtract p.y from the height of window because mouse coordinates do not
-  	// go in the same direction as screen coordinates.
-		glVertex2f( p.x, this->windowH - p.y );
+		glVertex2f( p.x, p.y );
 		cout << "Profile Draw: (" << p.x << ", " << p.y << ")" << endl;
   }
   glEnd();

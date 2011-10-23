@@ -9,15 +9,14 @@ using namespace std;
 class Profile
 {
 	public:
-		Profile(int windowH);
-		virtual ~Profile();
+		Profile(void);
+		virtual ~Profile(void);
 		void addPoint(int x, int y);	// Add point to the profile
 		void draw(void);							// Draw the profile
 		int getSize(void);						// Return the size of the point array
 		Point *getPoint(int p);				// Return the point at p in array
 	private:
 		vector<Point> points;					// Array of points.
-		int windowH;									// Height of window
 };
 
 #endif

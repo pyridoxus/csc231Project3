@@ -21,6 +21,7 @@ Model::Model(void)
 
 Model::~Model()
 {
+	this->clear();
 	return;
 }
 

@@ -3,7 +3,7 @@ Surface of Revolution
 ************************************************************************/
 #include "project3.h"
 
-Profile profile(HEIGHT);
+Profile profile;
 Model model;
 
 int main( int argc, char *argv[] )	// Return int in Linux
@@ -78,7 +78,7 @@ void plotPoints( int button, int state, int x, int y )
 {
 	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN))
 	{
-		profile.addPoint(x, y);
+		profile.addPoint(x, HEIGHT - y);
 		drawOrtho();									// Draw the profile
 	}
 	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_UP))
