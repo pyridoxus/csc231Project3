@@ -102,7 +102,7 @@ void plotPoints( int button, int state, int x, int y )
 	}
 	if((button == GLUT_LEFT_BUTTON) && (state == GLUT_UP))
 	{
-		drawModel();
+		buildModel();
 	}
 	return;
 }
@@ -132,11 +132,9 @@ void menu( int value )
 	{
 		case 1:
 			model.incResolution();
-			drawModel();
 		break;
 		case 2:
 			model.decResolution();
-			drawModel();
 		break;
 		case 3:
 			model.drawType(POINTS);
@@ -152,12 +150,12 @@ void menu( int value )
 		case 6:
 			model.drawType(RANDOMCOLORPOLY);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			drawModel();
 		break;
 		case 7:
 			exit(0);
 		break;
 	}
+	buildModel();
 	return;
 }
 
@@ -171,11 +169,9 @@ void keyboard( unsigned char key, int x, int y )
 		break;
 		case '+':
 			model.incResolution();
-			drawModel();
 		break;
 		case '-':
 			model.decResolution();
-			drawModel();
 		break;
 		case 'p':
 			model.drawType(POINTS);
@@ -191,9 +187,9 @@ void keyboard( unsigned char key, int x, int y )
 		case 'm':
 			model.drawType(RANDOMCOLORPOLY);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			drawModel();
 		break;
 	}
+	buildModel();
 }
 
 void consoleMenu(void)
@@ -208,7 +204,7 @@ void consoleMenu(void)
 	return;
 }
 
-void drawModel(void)
+void buildModel(void)
 {
 	model.clear();								// Clear current model
 	model.createModel(&profile);	// Create new one from profile

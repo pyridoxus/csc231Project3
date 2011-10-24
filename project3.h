@@ -20,7 +20,7 @@ int main_w, ortho, persp;
 void drawMain();
 void drawOrtho();
 void drawPersp();
-void drawModel(void);
+void buildModel(void);
 void plotPoints( int, int, int, int );
 void keyboard( unsigned char, int, int );
 void menu( int );
