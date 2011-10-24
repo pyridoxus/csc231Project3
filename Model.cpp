@@ -43,7 +43,6 @@ void Model::createPoints(Profile *profile)
 			q->y = p->y;
 			q->z = p->x * sin(a);
 			a += 2.0 * PI / this->resolution;
-			cout << "(" << q->x << ", " << q->y << ", " << q->z << ")" << endl;
 
 			this->points.push_back(*q);	// Vector will handle deleting objects
 		}
@@ -63,24 +62,20 @@ void Model::createPolygons(int numProfile)
 	{
 		i = p;	// Start the points in polygon with the current polygon index.
 		poly = new Polygon;
-		cout << "Polygon " << p << ": (" << i;
 		poly->addPoint(this->points[i]);
 
 		i += this->resolution;	// Point to the point on next row of profile.
 		poly->addPoint(this->points[i]);
-		cout << ", " << i;
 
 		// Now index the next point on next row. Check if the point is as the
 		// beginning of the row.
 		i ++; // Index to point
 		if((i % this->resolution) == 0) i -= this->resolution;	// Wrap around
 		poly->addPoint(this->points[i]);
-		cout << ", " << i;
 
 		// Now index the last point which is on current row.
 		i -= this->resolution;
 		poly->addPoint(this->points[i]);
-		cout << ", " << i << ")" << endl;
 
 		if(this->dType == RANDOMCOLORPOLY)
 		{
@@ -96,7 +91,6 @@ void Model::createPolygons(int numProfile)
 			c.z = 1.0;
 			poly->setColor(&c);
 		}
-		cout << "Random color: (" << c.x << ", " << c.y << ", " << c.z << ")" << endl;
 		this->mesh.push_back(*poly);	// Vector will handle deleting objects
 	}
 	return;
@@ -105,10 +99,8 @@ void Model::createPolygons(int numProfile)
 void Model::clear(void)
 // Delete the contents of the model
 {
-	cout << "Clearing model...." << endl;
 	this->mesh.clear();
 	this->points.clear();
-	cout << "Cleared model." << endl;
 	return;
 }
 
@@ -190,7 +182,7 @@ void Model::decResolution(void)
 	return;
 }
 
-void Model::printPoint(Point *p)
+void Model::printPoint(Point *p)	// Debugging
 {
 	cout << "(" << p->x << ", ";
 	cout << p->y << ", ";

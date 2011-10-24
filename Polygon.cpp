@@ -43,7 +43,6 @@ void Polygon::draw(int mode)			// Draw the polygon into the OpenGL system
 			glBegin( GL_POLYGON );
 		break;
 		case HIDDENSURFACEWIRE:
-			cout << this->color.x << " " << this->color.y << " " << this->color.z << endl;
 			glBegin( GL_POLYGON );
 		break;
 		case RANDOMCOLORPOLY:

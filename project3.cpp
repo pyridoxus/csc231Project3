@@ -80,9 +80,7 @@ void drawOrtho()
   glutPostRedisplay();
   glClearColor(0,0,0,1);
   glClear( GL_COLOR_BUFFER_BIT );
-//  cout << "Start profile draw" << endl;
 	glPushMatrix();		// Save view matrix
-//  glLoadIdentity();
 	glScalef( 1.0, -1.0, 1.0 );
 	glTranslatef( WIDTH / 2.0, -HEIGHT, 0.0 );
 
@@ -114,7 +112,6 @@ void drawPersp()
   glutPostRedisplay();
   glClearColor( 0, 0, 0, 1.0 );
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-//  cout << "Start model draw" << endl;
 
 	glPushMatrix();		// Save view matrix
 	glScalef( 1.0, -1.0, 1.0 );
