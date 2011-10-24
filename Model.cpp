@@ -129,8 +129,28 @@ void Model::createModel(Profile *profile)
 void Model::draw(void)
 // Draw the mesh into the OpenGL system
 {
-	for(unsigned int i = 0; i < this->mesh.size(); i++)
+	Point c, d;
+	unsigned int i;
+	for(i = 0; i < this->mesh.size(); i++)
 		this->mesh[i].draw(this->dType);
+	if(this->dType == HIDDENSURFACEWIRE)
+	{
+		// This section draws the offset polygons for the hidden surface wireframe.
+		c.x = c.y = c.z = 0.0;
+		d.x = d.y = d.z = 1.0;
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glEnable(GL_POLYGON_OFFSET_FILL);
+		glPolygonOffset(0.5, 0.5);
+		for(i = 0; i < this->mesh.size(); i++)
+		{
+			this->mesh[i].setColor(&c);
+			this->mesh[i].draw(HIDDENSURFACEWIRE);
+			this->mesh[i].setColor(&d);
+		}
+		// Put everything back to do the wireframe for next loop.
+		glDisable(GL_POLYGON_OFFSET_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
   glFlush();
 	return;
 }
@@ -139,6 +159,20 @@ void Model::drawType(int d)
 // Set the drawing type (wireframe, solid, etc)
 {
 	this->dType = d;
+	switch(d)
+	{
+		case POINTS:
+		break;
+		case WIREFRAME:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		break;
+		case HIDDENSURFACEWIRE:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		break;
+		case RANDOMCOLORPOLY:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		break;
+	}
 	return;
 }
 

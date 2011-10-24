@@ -141,15 +141,12 @@ void menu( int value )
 		break;
 		case 4:
 			model.drawType(WIREFRAME);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		break;
 		case 5:
 			model.drawType(HIDDENSURFACEWIRE);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		break;
 		case 6:
 			model.drawType(RANDOMCOLORPOLY);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		break;
 		case 7:
 			exit(0);
@@ -178,15 +175,12 @@ void keyboard( unsigned char key, int x, int y )
 		break;
 		case 'w':
 			model.drawType(WIREFRAME);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		break;
 		case 'h':
 			model.drawType(HIDDENSURFACEWIRE);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		break;
 		case 'm':
 			model.drawType(RANDOMCOLORPOLY);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		break;
 	}
 	buildModel();
