@@ -38,11 +38,11 @@ int main( int argc, char *argv[] )	// Return int in Linux
 	// Construct three-dimensional perspective projection here
   glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
-  glTranslatef( 0, 0, -CAMERA * WIDTH );
+  glTranslatef( 0, 0, -(CAMERA + 1) * WIDTH);
   glMatrixMode( GL_PROJECTION );
   glLoadIdentity();
 //  gluOrtho2D( 0.0, WIDTH, 0.0, HEIGHT );
-  gluPerspective(15.0, WIDTH / HEIGHT, 1.0, (CAMERA + 2) * WIDTH);
+  gluPerspective(11.0, WIDTH / HEIGHT, 1.0, (CAMERA + 2) * WIDTH);
 
 	// Perspective draw
   glEnable( GL_DEPTH_TEST );

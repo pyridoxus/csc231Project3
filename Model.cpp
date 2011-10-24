@@ -123,8 +123,6 @@ void Model::draw(void)
 {
 	Point c, d;
 	unsigned int i;
-	for(i = 0; i < this->mesh.size(); i++)
-		this->mesh[i].draw(this->dType);
 	if(this->dType == HIDDENSURFACEWIRE)
 	{
 		// This section draws the offset polygons for the hidden surface wireframe.
@@ -132,7 +130,7 @@ void Model::draw(void)
 		d.x = d.y = d.z = 1.0;
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glEnable(GL_POLYGON_OFFSET_FILL);
-		glPolygonOffset(0.5, 0.5);
+		glPolygonOffset(1.0, 1.0);
 		for(i = 0; i < this->mesh.size(); i++)
 		{
 			this->mesh[i].setColor(&c);
@@ -143,6 +141,7 @@ void Model::draw(void)
 		glDisable(GL_POLYGON_OFFSET_FILL);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
+	for(i = 0; i < this->mesh.size(); i++) this->mesh[i].draw(this->dType);
   glFlush();
 	return;
 }
